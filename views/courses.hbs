@@ -1,1 +1,19 @@
 <h1>Courses</h1>
+{{#each courseList as |course|}}
+<div class="col s12 m7">
+  <h2 class="header">Title: {{course.title}}</h2>
+  <div class="card horizontal">
+    <div class="card-stacked">
+      <div class="card-content">
+        <p>{{course.description}}.</p>
+        <p>Price: {{course.price}}.</p>
+        <p>Img: {{course.img}}.</p>
+
+      </div>
+      <div class="card-action">
+        <a href="#">ID: {{course.id}}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}

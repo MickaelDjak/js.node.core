@@ -1,10 +1,14 @@
 const { Router } = require("express");
+const Course = require("./../models/course");
 
 const router = Router();
 router.get("/", (request, response) => {
-  response.render("courses", {
-    title: "Курсы",
-    isCourses: true
+  Course.getAll().then((resolve, reject) => {
+    response.render("courses", {
+      courseList: resolve,
+      title: "Курсы",
+      isCourses: true
+    });
   });
 });
 

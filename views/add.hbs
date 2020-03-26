@@ -9,11 +9,16 @@
     </div>
 
     <div class="input-field">
+        <textarea name="description" id="textarea1" class="materialize-textarea" required></textarea>
+        <label for="textarea1">Описание</label>
+        <span class="helper-text" data-error="Введите описание"></span>
+    </div>
+
+    <div class="input-field">
         <input name="price" id="price" type="number" class="validate" required min="2">
         <label for="price">Цена курса</label>
         <span class="helper-text" data-error="Введите цену"></span>
     </div>
-
 
     <div class="input-field">
         <input name="img" id="img" type="text" class="validate" required>
