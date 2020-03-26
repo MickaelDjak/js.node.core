@@ -1,4 +1,4 @@
-<h1>Courses</h1>
+<h1>Курсы</h1>
 {{#if courseList.length }}
 
 {{#each courseList as |course|}}
@@ -8,10 +8,11 @@
     <div class="card-stacked">
       <div class="card-content">
         <p>{{course.description}}.</p>
-        <p>Price: {{course.price}}.</p>
+        <p class="price">{{course.price}}.</p>
       </div>
       <div class="card-action">
-        <a href="/courses/{{course.id}}">Открыть курсы</a>
+        <a href="/courses/{{course.id}}" target="_blank">Подробнее о курсе</a>
+        <a href="/courses/{{course.id}}/edit?allow=true">Редактировать</a>
       </div>
     </div>
   </div>

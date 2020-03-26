@@ -2,7 +2,6 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 
 const homeRoute = require("./routes/home");
-const addRoute = require("./routes/add");
 const aboutRoute = require("./routes/about");
 const coursesRoute = require("./routes/courses");
 
@@ -25,7 +24,6 @@ app.use(
 );
 
 app.use("/", homeRoute);
-app.use("/add", addRoute);
 app.use("/about", aboutRoute);
 app.use("/courses", coursesRoute);
 

@@ -3,6 +3,7 @@
         <a href="#" class="brand-logo">Learner</a>
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+
             {{#if isHome}}
             <li class="active"><a href="/">Главная</a></li>
             {{else}}
@@ -16,9 +17,9 @@
             {{/if}}
 
             {{#if isAdd}}
-            <li class="active"><a href="/add">Добавить курс</a></li>
+            <li class="active"><a href="/courses/create">Добавить курс</a></li>
             {{else}}
-            <li><a href="/add">Добавить курс</a></li>
+            <li><a href="/courses/create">Добавить курс</a></li>
             {{/if}}
 
             {{#if isAbout}}
@@ -26,7 +27,6 @@
             {{else}}
             <li><a href="/about">Курсы</a></li>
             {{/if}}
-
         </ul>
     </div>
 </nav>

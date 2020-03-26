@@ -16,36 +16,60 @@ class Course {
   async save() {
     const courses = await Course.getAll();
 
+    const nextCoures = [
+      ...courses,
+      {
+        title: this.title,
+        description: this.description,
+        price: this.price,
+        img: this.img,
+        id: this.id
+      }
+    ];
+
     return new Promise((resolve, reject) => {
-      fs.writeFile(
-        pathToData,
-        JSON.stringify([
-          ...courses,
-          {
-            title: this.title,
-            description: this.description,
-            price: this.price,
-            img: this.img,
-            id: this.id
-          }
-        ]),
-        err => {
-          err ? reject(err) : resolve();
-        }
-      );
+      fs.writeFile(pathToData, JSON.stringify(nextCoures), err => {
+        err ? reject(err) : resolve();
+      });
+    });
+  }
+
+  static async update(data) {
+    const courses = await Course.getAll();
+
+    const index = courses.findIndex(course => course.id === data.id);
+
+    const nextCoures = [
+      ...courses.slice(0, index),
+      {
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        img: data.img,
+        id: data.id
+      },
+      ...courses.slice(index + 1)
+    ];
+
+    return new Promise((resolve, reject) => {
+      fs.writeFile(pathToData, JSON.stringify(nextCoures), err => {
+        err ? reject(err) : resolve();
+      });
     });
   }
 
   static getAll() {
     return new Promise((resolve, reject) => {
       fs.readFile(pathToData, "utf-8", (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(JSON.parse(data));
-        }
+        err ? reject(err) : resolve(JSON.parse(data));
       });
     });
+  }
+
+  static async findById(id) {
+    const courses = await Course.getAll();
+
+    return courses.find(el => el.id === id);
   }
 }
 
