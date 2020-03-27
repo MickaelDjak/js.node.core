@@ -3,42 +3,28 @@
     "title": "Node js",
     "description": "description 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "price": "50",
-    "img": "https://img.png",
+    "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1920px-Node.js_logo.svg.png",
     "id": "f8b013123-1c7f-4327-8ec9-30f5e1eb74a4"
   },
   {
     "title": "React.js",
     "description": "description 2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "price": "502",
-    "img": "312",
+    "img": "https://miro.medium.com/max/3200/1*EVqCcmCPgpNKxU1wzcTHgw.png",
     "id": "f8b013c8-1c7f-4327-8ec9-30f5e1eb74a4"
   },
   {
     "title": "Angular.js",
     "description": "Ну очень классный курсы Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "price": "503",
-    "img": "http://lorempixel.com/g/400/200",
+    "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/AngularJS_logo.svg/1200px-AngularJS_logo.svg.png",
     "id": "da63752a-087c-460a-a3bf-6c508e4e0a9a"
   },
   {
-    "title": "materializecss",
+    "title": "materialize css",
     "description": "materializecss то что надо для быстрой разработки Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "price": "56665",
-    "img": "http://lorempixel.com/400/200",
+    "img": "https://process.fs.teachablecdn.com/ADNupMnWyR7kCWRvm76Laz/resize=width:705/https://www.filepicker.io/api/file/01FxFqRvQ1SFGjGsnalr",
     "id": "3dd919a0-c5fe-4c33-92d4-26097abd89db"
-  },
-  {
-    "title": "1",
-    "description": "1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "price": "122",
-    "img": "2",
-    "id": "be0c33da-6909-44bb-a79f-46032a7de93d"
-  },
-  {
-    "title": "1",
-    "description": "2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "price": "32",
-    "img": "3",
-    "id": "05ddc602-5ab6-43c4-b8e4-c8a3469bbd53"
   }
 ]

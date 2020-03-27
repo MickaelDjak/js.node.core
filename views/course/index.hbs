@@ -3,16 +3,23 @@
 
 {{#each courseList as |course|}}
 <div class="col s12 m6">
-  <h2 class="header">{{course.title}} {{course.img}}</h2>
+  <h2 class="header">{{course.title}}</h2>
   <div class="card horizontal">
     <div class="card-stacked">
+      <div class="card-image">
+        <img src="{{course.img}}">
+      </div>
       <div class="card-content">
         <p>{{course.description}}.</p>
-        <p class="price">{{course.price}}.</p>
+        <p class="price">{{course.price}}</p>
       </div>
-      <div class="card-action">
+      <div class="card-action actions">
         <a href="/courses/{{course.id}}" target="_blank">Подробнее о курсе</a>
         <a href="/courses/{{course.id}}/edit?allow=true">Редактировать</a>
+        <form action="/card/add" method="POST">
+          <input type="hidden" name="id" value={{course.id}} />
+          <button type="submit" class="btn btn-primary">Купить</button>
+        </form>
       </div>
     </div>
   </div>

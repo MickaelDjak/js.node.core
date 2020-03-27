@@ -28,7 +28,7 @@ router.get("/:id/edit", async (request, response) => {
 router.get("/create", (request, response) => {
   response.render("course/create", {
     title: "Добавить курс",
-    isAdd: true
+    isCreate: true
   });
 });
 

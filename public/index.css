@@ -8,6 +8,16 @@ nav {
   justify-content: center;
 }
 
+.card-action.actions {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.card-image {
+  margin: 20px auto;
+}
+
 .price {
   font-size: 2rem;
 }

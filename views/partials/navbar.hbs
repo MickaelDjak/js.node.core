@@ -16,10 +16,16 @@
             <li><a href="/courses">Курсы</a></li>
             {{/if}}
 
-            {{#if isAdd}}
+            {{#if isCreate}}
             <li class="active"><a href="/courses/create">Добавить курс</a></li>
             {{else}}
             <li><a href="/courses/create">Добавить курс</a></li>
+            {{/if}}
+
+            {{#if isCard}}
+            <li class="active"><a href="/card">Корзина</a></li>
+            {{else}}
+            <li><a href="/card">Корзина</a></li>
             {{/if}}
 
             {{#if isAbout}}

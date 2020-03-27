@@ -1,0 +1,25 @@
+<h1>Корзина</h1>
+<div class="row">
+
+  {{#if card.length}}
+
+  {{#each card as |item|}}
+  <div class="col  m6">
+    <div class="card">
+      <div class="card-image">
+        <img src="{{item.img}}" />
+        <span class="card-title">{{item.title}}</span>
+        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">-</i></a>
+      </div>
+      <div class="card-content">
+        <p>{{item.description}}</p>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  {{else}}
+  <p>Курсов нет</p>
+  {{/if}}
+
+</div>
