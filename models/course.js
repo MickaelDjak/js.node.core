@@ -71,6 +71,14 @@ class Course {
 
     return courses.find(el => el.id === id);
   }
+
+  static async findByIdList(idList) {
+    const courses = await Course.getAll();
+
+    return courses.filter(el => {
+      return idList.some(id => id === el.id);
+    });
+  }
 }
 
 module.exports = Course;

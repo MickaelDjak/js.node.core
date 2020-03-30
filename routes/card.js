@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const Card = require("./../models/card");
-const Course = require("./../models/course");
 
 const router = Router();
 
@@ -16,9 +15,7 @@ router.get("/", async (request, response) => {
 });
 
 router.post("/add", async (request, response) => {
-  const course = await Course.findById(request.body.id);
-
-  await Card.add(course);
+  await Card.add(request.body.id);
 
   response.redirect("/card");
 });
