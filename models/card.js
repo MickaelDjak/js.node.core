@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const Curse = require("./course");
 
 const cardPath = path.join(__dirname, "..", "data", "card.json");
 
@@ -7,15 +8,21 @@ class Card {
   static async add(course) {
     const cardPrev = await Card.fetch();
 
-    const index = cardPrev.courses.findIndex(el => el.id === course.id);
-
+    const index = await cardPrev.courses.findIndex(el => el.id === course.id);
     let coursesNext = [];
     if (index === -1) {
-      coursesNext = await [...cardPrev.courses, course];
+      const fetchedCourse = await Curse.findById(course.id);
+      coursesNext = await [
+        ...cardPrev.courses,
+        {
+          ...fetchedCourse,
+          count: 1
+        }
+      ];
     } else {
-      const targetCoutse = cardPrev[index];
+      const targetCoutse = await cardPrev.courses[index];
 
-      coursesNext = [
+      coursesNext = await [
         ...cardPrev.courses.slice(0, index),
         {
           ...targetCoutse,

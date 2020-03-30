@@ -15,7 +15,7 @@ router.get("/", async (request, response) => {
 });
 
 router.post("/add", async (request, response) => {
-  await Card.add(request.body.id);
+  await Card.add(request.body);
 
   response.redirect("/card");
 });
