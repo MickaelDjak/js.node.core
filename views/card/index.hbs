@@ -1,6 +1,8 @@
 <h1>Корзина</h1>
 <div class="row">
 
+  {{#if courses.length}}
+
   <table class="table">
     <thead>
       <tr>
@@ -8,10 +10,11 @@
         <th scope="col">Название</th>
         <th scope="col">Цена</th>
         <th scope="col">Количество</th>
+        <th scope="col">Действия</th>
       </tr>
     </thead>
     <tbody>
-      {{#if courses.length}}
+
 
       {{#each courses as |item key|}}
       <tr>
@@ -19,18 +22,22 @@
         <td>{{item.title}}</td>
         <td class="price"> {{item.price}}</td>
         <td> {{item.count}}</td>
+        <td><button class="btn btn-small">Удалить</button> </td>
       </tr>
       {{/each}}
 
-      {{else}}
-
-      {{/if}}
       <tr>
         <th scope="row">#</th>
         <td>Итого </td>
         <td class="price">{{price}}</td>
-        <td>0</td>
+        <td></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
+
+  {{else}}
+  <p>Курсов еще нет</p>
+
+  {{/if}}
 </div>
