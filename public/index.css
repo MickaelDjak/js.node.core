@@ -18,10 +18,6 @@ nav {
   margin: 20px auto;
 }
 
-.price {
-  font-size: 2rem;
-}
-
 .course {
   width: 100%;
   display: flex;
@@ -33,6 +29,6 @@ nav {
   margin-bottom: 2rem;
 }
 
-.course .price.big {
-  font-size: 1.5rem;
+.price.big {
+  font-size: 2rem;
 }

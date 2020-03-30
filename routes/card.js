@@ -10,7 +10,8 @@ router.get("/", async (request, response) => {
   response.render("card/index", {
     title: "Корзина",
     isCard: true,
-    card
+    courses: card.courses,
+    price: card.price
   });
 });
 

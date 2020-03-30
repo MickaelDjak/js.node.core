@@ -1,25 +1,33 @@
 <h1>Корзина</h1>
 <div class="row">
 
-  {{#if card.length}}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Название</th>
+        <th scope="col">Цена</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if courses.length}}
 
-  {{#each card as |item|}}
-  <div class="col  m6">
-    <div class="card">
-      <div class="card-image">
-        <img src="{{item.img}}" />
-        <span class="card-title">{{item.title}}</span>
-        <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">-</i></a>
-      </div>
-      <div class="card-content">
-        <p>{{item.description}}</p>
-      </div>
-    </div>
-  </div>
-  {{/each}}
+      {{#each courses as |item key|}}
+      <tr>
+        <th scope="row">{{key}}</th>
+        <td>{{item.title}}</td>
+        <td class="price"> {{item.price}}</td>
+      </tr>
+      {{/each}}
 
-  {{else}}
-  <p>Курсов нет</p>
-  {{/if}}
+      {{else}}
 
+      {{/if}}
+      <tr>
+        <th scope="row">#</th>
+        <td>Итого </td>
+        <td class="price">{{price}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
