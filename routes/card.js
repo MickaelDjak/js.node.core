@@ -14,6 +14,12 @@ router.get("/", async (request, response) => {
   });
 });
 
+router.delete("/delete/:id", async (request, response) => {
+  const card = await Card.deleteById(request.params.id);
+
+  response.json(card);
+});
+
 router.post("/add", async (request, response) => {
   await Card.add(request.body);
 

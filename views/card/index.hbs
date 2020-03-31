@@ -1,43 +1,37 @@
 <h1>Корзина</h1>
 <div class="row">
+  <div id="card">
+    {{#if courses.length}}
 
-  {{#if courses.length}}
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">№</th>
+            <th scope="col">Название</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">№</th>
-        <th scope="col">Название</th>
-        <th scope="col">Цена</th>
-        <th scope="col">Количество</th>
-        <th scope="col">Действия</th>
-      </tr>
-    </thead>
-    <tbody>
+          {{#each courses as |item key|}}
+          <tr>
+            <th scope="row">{{key}}</th>
+            <td>{{item.title}}</td>
+            <td class="price"> {{item.price}}</td>
+            <td> {{item.count}}</td>
+            <td><button class="btn btn-small card-on-delete" data-id={{item.id}}>Удалить</button> </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <p>Цена <span class="price big">{{price}}</span></p>
+    {{else}}
+    <p>Корзина пуста</p>
 
-
-      {{#each courses as |item key|}}
-      <tr>
-        <th scope="row">{{key}}</th>
-        <td>{{item.title}}</td>
-        <td class="price"> {{item.price}}</td>
-        <td> {{item.count}}</td>
-        <td><button class="btn btn-small">Удалить</button> </td>
-      </tr>
-      {{/each}}
-
-      <tr>
-        <th scope="row">#</th>
-        <td>Итого </td>
-        <td class="price">{{price}}</td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-
-  {{else}}
-  <p>Курсов еще нет</p>
-
-  {{/if}}
+    {{/if}}
+  </div>
 </div>
