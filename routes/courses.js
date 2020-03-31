@@ -2,13 +2,13 @@ const { Router } = require("express");
 const Course = require("./../models/course");
 
 const router = Router();
-router.get("/", (request, response) => {
-  Course.getAll().then((resolve, reject) => {
-    response.render("course/index", {
-      courseList: resolve,
-      title: "Курсы",
-      isCourses: true
-    });
+router.get("/", async (request, response) => {
+  const courses = await Course.find();
+
+  response.render("course/index", {
+    courses: courses,
+    title: "Курсы",
+    isCourses: true
   });
 });
 
@@ -33,20 +33,25 @@ router.get("/create", (request, response) => {
 });
 
 router.post("/store", async (request, response) => {
-  const course = new Course(
-    request.body.title,
-    request.body.description,
-    request.body.price,
-    request.body.img
-  );
+  const course = new Course({
+    title: request.body.title,
+    description: request.body.description,
+    price: request.body.price,
+    img: request.body.img
+  });
 
-  await course.save();
+  try {
+    await course.save();
 
-  response.redirect("/courses");
+    response.redirect("/courses");
+  } catch (e) {
+    console.warn(e);
+  }
 });
 
 router.post("/update", async (request, response) => {
-  await Course.update(request.body);
+  const { id, ...updated } = request.body;
+  await Course.findByIdAndUpdate(id, updated);
 
   response.redirect("/courses");
 });
