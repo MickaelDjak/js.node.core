@@ -17,22 +17,24 @@ if (cardHtml !== null) {
 
   addEventListener("click", event => {
     if (event.target.classList.contains("card-on-delete")) {
+      console.log(event.target);
       const id = event.target.dataset.id;
 
       fetch(`card/delete/${id}`, {
         method: "delete"
       })
         .then(res => res.json())
-        .then(card => {
-          cardHtml.innerHTML = renderCard(card);
+        .then(courses => {
+          cardHtml.innerHTML = renderCard(courses);
         });
     }
   });
 }
 
-function renderCard(card) {
-  if (card.courses.length) {
-    const html = card.courses.map((item, index) => {
+function renderCard(courses) {
+  if (courses.length) {
+    console.log(courses);
+    const html = courses.map((item, index) => {
       const price = toCurrency(item.price);
 
       return `<tr>
@@ -40,11 +42,15 @@ function renderCard(card) {
           <td>${item.title}</td>
           <td class="price"> ${price}</td>
           <td> ${item.count}</td>
-          <td><button class="btn btn-small card-on-delete" data-id=${item.id}>Удалить</button> </td>
+          <td><button class="btn btn-small card-on-delete" data-id=${item._id}>Удалить</button> </td>
         </tr>`;
     });
 
-    const price = toCurrency(card.price);
+    const price = courses.reduce((result, el) => {
+      return Number(result) + Number(el.price) * Number(el.count);
+    }, 0);
+
+    // const price = toCurrency(card.price);
 
     return `
               <div id="card">
@@ -63,7 +69,7 @@ function renderCard(card) {
       </tbody>
     </table>
   </div>
-  <p>Цена <span class="price big">${price}</span></p>`;
+  <p>Цена <span class="price big">${toCurrency(price)}</span></p>`;
   }
 
   return "<p>Корзина пуста</p>";

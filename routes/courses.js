@@ -55,16 +55,26 @@ router.post("/store", async (request, response) => {
 
   try {
     await course.save();
-
-    response.redirect("/courses");
   } catch (e) {
     console.warn(e);
   }
+
+  response.redirect("/courses");
 });
 
 router.post("/update", async (request, response) => {
   const { id, ...data } = request.body;
   await Course.findByIdAndUpdate(id, data);
+
+  response.redirect("/courses");
+});
+
+router.post("/remove", async (request, response) => {
+  try {
+    await Course.deleteOne({ _id: request.body.id });
+  } catch (e) {
+    console.log(e);
+  }
 
   response.redirect("/courses");
 });

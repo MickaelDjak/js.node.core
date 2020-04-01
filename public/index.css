@@ -32,3 +32,8 @@ nav {
 .price.big {
   font-size: 2rem;
 }
+
+.red {
+  background: red;
+  margin-top: 15px;
+}

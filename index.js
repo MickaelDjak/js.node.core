@@ -39,6 +39,7 @@ async function start() {
       "mongodb://mdjak:fYibKrsXYRGBWVEQzl0w@localhost:27017/learner",
       {
         useNewUrlParser: true,
+        useFindAndModify: false,
         useUnifiedTopology: true
       }
     );
