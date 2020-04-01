@@ -5,6 +5,7 @@ const router = Router();
 
 router.get("/", async (request, response) => {
   const card = await Card.fetch();
+  console.log([card._id, card.title, card.price]);
 
   response.render("card/index", {
     title: "Корзина",

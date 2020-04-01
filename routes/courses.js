@@ -13,22 +13,35 @@ router.get("/", async (request, response) => {
 });
 
 router.get("/:id/edit", async (request, response) => {
-  if (request.query.allow === true) {
-    const course = await Course.findById(request.params.id);
-
-    response.render("course/edit", {
-      title: `Редактирование ${course.title}`,
-      course
-    });
+  if (request.query.allow !== "true") {
+    return response.redirect("/");
   }
+  const course = await Course.findById(request.params.id);
 
-  return response.redirect("/");
+  response.render("course/edit", {
+    title: `Редактирование ${course.title}`,
+    course
+  });
 });
 
 router.get("/create", (request, response) => {
   response.render("course/create", {
     title: "Добавить курс",
     isCreate: true
+  });
+});
+
+router.get("/:id", async (request, response) => {
+  if (request.query.allow === false) {
+    return response.redirect("/");
+  }
+
+  const course = await Course.findById(request.params.id);
+
+  response.render("course/show", {
+    layout: "empty",
+    title: course.title,
+    course
   });
 });
 
@@ -50,24 +63,10 @@ router.post("/store", async (request, response) => {
 });
 
 router.post("/update", async (request, response) => {
-  const { id, ...updated } = request.body;
-  await Course.findByIdAndUpdate(id, updated);
+  const { id, ...data } = request.body;
+  await Course.findByIdAndUpdate(id, data);
 
   response.redirect("/courses");
-});
-
-router.get("/:id", async (request, response) => {
-  if (request.query.allow === false) {
-    return response.redirect("/");
-  }
-
-  const course = await Course.findById(request.params.id);
-
-  response.render("course/show", {
-    layout: "empty",
-    title: course.title,
-    course
-  });
 });
 
 module.exports = router;
