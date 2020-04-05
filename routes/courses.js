@@ -8,7 +8,7 @@ router.get("/", async (request, response) => {
   response.render("course/index", {
     courses: courses,
     title: "Курсы",
-    isCourses: true
+    isCourses: true,
   });
 });
 
@@ -20,14 +20,14 @@ router.get("/:id/edit", async (request, response) => {
 
   response.render("course/edit", {
     title: `Редактирование ${course.title}`,
-    course
+    course,
   });
 });
 
 router.get("/create", (request, response) => {
   response.render("course/create", {
     title: "Добавить курс",
-    isCreate: true
+    isCreate: true,
   });
 });
 
@@ -36,12 +36,15 @@ router.get("/:id", async (request, response) => {
     return response.redirect("/");
   }
 
-  const course = await Course.findById(request.params.id);
+  const course = await Course.findById(request.params.id).populate(
+    "userId",
+    "email name"
+  );
 
   response.render("course/show", {
     layout: "empty",
     title: course.title,
-    course
+    course,
   });
 });
 
@@ -50,7 +53,8 @@ router.post("/store", async (request, response) => {
     title: request.body.title,
     description: request.body.description,
     price: request.body.price,
-    img: request.body.img
+    img: request.body.img,
+    userId: request.user.id,
   });
 
   try {

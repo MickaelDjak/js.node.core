@@ -1,7 +1,8 @@
 <div class="course">
 
   <h1>Детали курса {{course.title}}</h1>
-  <div class="price big">{{course.price}}</div>
+  <p>Создан <span>{{course.userId.name}}</span> <span>{{course.userId.email}}</span></p>
   <p>{{course.description}}</p>
+  <div class="price big">{{course.price}}</div>
   <img src="{{course.img}}" />
 </div>

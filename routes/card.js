@@ -1,62 +1,34 @@
 const { Router } = require("express");
-const Card = require("./../models/card");
 const Course = require("./../models/course");
+const User = require("./../models/user");
 
 const router = Router();
 
 router.get("/", async (request, response) => {
-  const card = await Card.find();
+  const user = await request.user;
 
-  const price = await card.reduce((result, el) => {
-    return Number(result) + Number(el.price) * Number(el.count);
-  }, 0);
+  await user.fillData();
+  const card = user.toClient();
 
   response.render("card/index", {
     title: "Корзина",
     isCard: true,
-    courses: card,
-    price: price
+    ...card,
   });
 });
 
 router.delete("/delete/:id", async (request, response) => {
-  const card = await Card.findById(request.params.id);
+  const user = await request.user;
+  await user.removeFromCard(request.params.id);
+  await user.fillData();
+  const card = user.toClient();
 
-  if (Number(card.count) === 1) {
-    await Card.findByIdAndDelete(card.id);
-  } else {
-    card.count -= 1;
-    await card.save();
-  }
-  const cardAll = await Card.find();
-  response.json(cardAll);
+  response.json(card);
 });
 
 router.post("/add", async (request, response) => {
-  const course = await Course.findById(request.body.id);
-
-  let card = await Card.findOne({
-    courseId: request.body.id
-  });
-
-  if (card === null) {
-    card = new Card({
-      courseId: course.id,
-      title: course.title,
-      description: course.description,
-      price: course.price,
-      img: course.img,
-      count: 1
-    });
-  } else {
-    card.count += 1;
-  }
-
-  try {
-    await card.save();
-  } catch (e) {
-    console.log(e);
-  }
+  const user = await request.user;
+  await user.addToCard(request.body.id);
 
   response.redirect("/card");
 });
