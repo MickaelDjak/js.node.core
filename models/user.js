@@ -72,6 +72,11 @@ userSchema.methods.removeFromCard = async function (courseId) {
   return await this.save();
 };
 
+userSchema.methods.clearCard = async function () {
+  this.card.items = [];
+  return await this.save();
+};
+
 userSchema.methods.fillData = async function () {
   await this.populate("card.items.courseId").execPopulate();
 };

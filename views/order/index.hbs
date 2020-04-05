@@ -1,0 +1,20 @@
+<h2>Мои заказы</h2>
+
+{{#if orders.length }}
+
+{{#each orders as |order|}}
+<div class="col s12 m6">
+    <p>{{order.date}}</p>
+    <p>{{order.user.name}}</p>
+    <p>{{order.courses.length}}</p>
+
+</div>
+{{/each}}
+
+{{else}}
+
+<div class="col s12 m7">
+    <h3>Заказов пока нет</h>
+</div>
+
+{{/if}}

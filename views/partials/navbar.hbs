@@ -28,11 +28,18 @@
             <li><a href="/card">Корзина</a></li>
             {{/if}}
 
+            {{#if isOrder}}
+            <li class="active"><a href="/order">Заказы</a></li>
+            {{else}}
+            <li><a href="/order">Заказы</a></li>
+            {{/if}}
+
             {{#if isAbout}}
             <li class="active"><a href="/about">О нас</a></li>
             {{else}}
             <li><a href="/about">О нас</a></li>
             {{/if}}
+
         </ul>
     </div>
 </nav>
