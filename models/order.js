@@ -28,16 +28,20 @@ const orderSchema = Schema({
 orderSchema.post("find", async function (orders) {
   for (let order of orders) {
     await order.populate("user courses.courseId").execPopulate();
+    order.price = await order.courses.reduce((result, el) => {
+      return result + el.courseId.price * el.count;
+    }, 0);
+
+    const options = {
+      month: "long",
+      day: "numeric",
+      weekday: "long",
+      hour: "numeric",
+      minute: "numeric",
+    };
+
+    order.dateOfOrder = order.date.toLocaleString("ru", options);
   }
 });
-
-orderSchema.methods.toClient = function () {
-  return {
-    ...this,
-    price: this.courses.reduce((res, el) => {
-      return (res += el.price * el.count);
-    }, 0),
-  };
-};
 
 module.exports = model("Order", orderSchema);

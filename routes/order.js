@@ -8,8 +8,7 @@ router.get("/", async (request, response) => {
   response.render("order/index", {
     title: "Заказы",
     isOrder: true,
-    orders,
-    // ...order.toClient(),
+    orders: orders,
   });
 });
 

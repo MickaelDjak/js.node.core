@@ -1,20 +1,53 @@
 <h2>Мои заказы</h2>
 
-{{#if orders.length }}
 
-{{#each orders as |order|}}
-<div class="col s12 m6">
-    <p>{{order.date}}</p>
-    <p>{{order.user.name}}</p>
-    <p>{{order.courses.length}}</p>
+<div class="row">
+    <div id="order">
+        {{#if orders.length }}
 
+        <p>{{order.user.name}}</p>
+
+        {{#each orders as |order|}}
+
+        <h3>Заказ #{{order.id}}</h3>
+        <span>{{order.dateOfOrder}}</span>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Количество</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {{#each order.courses as |course key|}}
+                    <tr>
+                        <th scope="row">{{key}}</th>
+                        <td>{{course.courseId.title}}</td>
+                        <td class="price"> {{course.courseId.price}}</td>
+                        <td> {{course.count}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <p>Цена <span class="price big">{{order.price}}</span></p>
+
+        {{!-- <form action="/order/" method="POST"> --}}
+        <button type="submit" class="btn">Оплатить</button>
+        {{!-- </form> --}}
+        <hr />
+
+        {{/each}}
+        {{else}}
+
+        <div class="col s12 m7">
+            <h3>Заказов пока нет</h>
+        </div>
+
+        {{/if}}
+    </div>
 </div>
-{{/each}}
-
-{{else}}
-
-<div class="col s12 m7">
-    <h3>Заказов пока нет</h>
-</div>
-
-{{/if}}
