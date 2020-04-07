@@ -40,6 +40,13 @@
             <li><a href="/about">О нас</a></li>
             {{/if}}
 
+            {{#if isLogin}}
+            <li class="active"><a href="/auth/login">Войти</a></li>
+            {{else}}
+            <li><a href="/auth/login">Войти</a></li>
+            {{/if}}
+
+
         </ul>
     </div>
 </nav>

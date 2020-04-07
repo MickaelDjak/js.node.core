@@ -66,3 +66,8 @@ function renderCard({ courses, price }) {
 
   return "<p>Корзина пуста</p>";
 }
+
+const tab = document.querySelector(".login .tabs");
+if (tab !== null) {
+  var instance = M.Tabs.init(tab, {});
+}

@@ -1,0 +1,65 @@
+<div class="login">
+    <div class="row">
+        <div class="col s6 offset-s3  login-tab-header">
+            <ul class="tabs">
+                <li class="tab col s6 "><a href="#login" class="active">Войти</a></li>
+                <li class="tab col s6 "><a href="#registrate">Регестрация</a></li>
+            </ul>
+        </div>
+        <div id="login" class="col s6 offset-s3 ">
+            <h2>Аутентификация</h2>
+
+            <form action='/auth/login' method="POST">
+                <div class="input-field">
+                    <input name="email" id="email" type="email" class="validate" required />
+                    <label for="email">Почта</label>
+                    <span class="helper-text" data-error="Введите электронную почту"></span>
+                </div>
+
+                <div class="input-field">
+                    <input name="password" id="password" type="password" class="validate" required />
+                    <label for="password">Пароль</label>
+                    <span class="helper-text" data-error="Введите пароль"></span>
+                </div>
+
+                <button class="btn btn-primary">Войти</button>
+
+            </form>
+
+
+        </div>
+        <div id="registrate" class="col s6 offset-s3 ">
+            <h2>Регистрация</h2>
+
+            <form action='/auth/registr' method="POST">
+
+                <div class="input-field">
+                    <input name="login" id="login-r" type="text" class="validate" required />
+                    <label for="login-r">Логин</label>
+                    <span class="helper-text" data-error="Введите логин"></span>
+                </div>
+
+                <div class="input-field">
+                    <input name="email" id="email-r" type="email" class="validate" required />
+                    <label for="email-r">Почта</label>
+                    <span class="helper-text" data-error="Введите электронную почту"></span>
+                </div>
+
+                <div class="input-field">
+                    <input name="passwor" id="password-r" type="password" class="validate" required />
+                    <label for="password-r">Пароль</label>
+                    <span class="helper-text" data-error="Введите пароль"></span>
+                </div>
+
+                <div class="input-field">
+                    <input name="password-comfirm" id="password-comfirm-r" type="password" class="validate" required />
+                    <label for="password-comfirm-r">Повторно пароль</label>
+                    <span class="helper-text" data-error="Введите пароль еще раз"></span>
+                </div>
+
+                <button class="btn btn-primary">Зарегистрироватья</button>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -37,3 +37,8 @@ nav {
   background: red;
   margin-top: 15px;
 }
+
+.login-tab-header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
