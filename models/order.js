@@ -25,22 +25,25 @@ const orderSchema = Schema({
   },
 });
 
+async function load(order) {
+  await order.populate("user courses.courseId").execPopulate();
+
+  order.price = await order.courses.reduce((result, el) => {
+    return result + el.courseId.price * el.count;
+  }, 0);
+
+  order.dateOfOrder = order.date.toLocaleString("ru", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 orderSchema.post("find", async function (orders) {
   for (let order of orders) {
-    await order.populate("user courses.courseId").execPopulate();
-    order.price = await order.courses.reduce((result, el) => {
-      return result + el.courseId.price * el.count;
-    }, 0);
-
-    const options = {
-      month: "long",
-      day: "numeric",
-      weekday: "long",
-      hour: "numeric",
-      minute: "numeric",
-    };
-
-    order.dateOfOrder = order.date.toLocaleString("ru", options);
+    await load(order);
   }
 });
 

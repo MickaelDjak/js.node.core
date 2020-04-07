@@ -1,53 +1,60 @@
 <h2>Мои заказы</h2>
 
+<div id="order"></div>
 
+
+{{#if orders.length }}
+
+
+{{#each orders as |order|}}
 <div class="row">
-    <div id="order">
-        {{#if orders.length }}
+    <div class="card">
+        <div class="card-content">
 
-        <p>{{order.user.name}}</p>
+            <h3>Заказ №{{order.id}}</h3>
+            <span>{{order.dateOfOrder}}</span>
+            <p>{{order.user.name}} (<em>{{order.user.email}}</em>)</p>
 
-        {{#each orders as |order|}}
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Цена</th>
+                            <th scope="col">Количество</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-        <h3>Заказ #{{order.id}}</h3>
-        <span>{{order.dateOfOrder}}</span>
-        <div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">№</th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Цена</th>
-                        <th scope="col">Количество</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {{#each order.courses as |course key|}}
-                    <tr>
-                        <th scope="row">{{key}}</th>
-                        <td>{{course.courseId.title}}</td>
-                        <td class="price"> {{course.courseId.price}}</td>
-                        <td> {{course.count}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
+                        {{#each order.courses as |course key|}}
+                        <tr>
+                            <th scope="row">{{key}}</th>
+                            <td>{{course.courseId.title}}</td>
+                            <td class="price"> {{course.courseId.price}}</td>
+                            <td> {{course.count}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <p>Цена <span class="price big">{{order.price}}</span></p>
+            <div class="card-action">
+                {{!-- <form action="/order/" method="POST"> --}}
+                {{!-- type="submit" --}}
+                <button class="btn">Оплатить</button>
+                {{!-- </form> --}}
+            </div>
         </div>
-        <p>Цена <span class="price big">{{order.price}}</span></p>
-
-        {{!-- <form action="/order/" method="POST"> --}}
-        <button type="submit" class="btn">Оплатить</button>
-        {{!-- </form> --}}
-        <hr />
-
-        {{/each}}
-        {{else}}
-
-        <div class="col s12 m7">
-            <h3>Заказов пока нет</h>
-        </div>
-
-        {{/if}}
     </div>
+
+    {{/each}}
+    {{else}}
+
+    <div class="col s12 m7">
+        <h3>Заказов пока нет</h>
+    </div>
+
+    {{/if}}
+</div>
 </div>
