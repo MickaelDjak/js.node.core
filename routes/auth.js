@@ -12,29 +12,47 @@ router.get("/login", (request, response) => {
 });
 
 router.post("/login", async (request, response) => {
-  const user = await User.findOne({
-    email: request.body.email,
-  });
-
-  if (user) {
-    request.session.isAuthoenticated = true;
-    request.session.userId = user._id;
-
-    request.session.save((err) => {
-      if (err) {
-        throw new Error(err);
-      }
-      response.redirect("/");
+  try {
+    const user = await User.findOne({
+      email: request.body.email,
     });
-  } else {
+
+    if (user) {
+      if (user.password === request.body.password) {
+        request.session.userId = user._id;
+        request.session.isAuthoenticated = true;
+
+        return request.session.save((err) => {
+          if (err) {
+            throw new Error(err);
+          }
+          response.redirect("/");
+        });
+      }
+    }
+
+    return response.redirect("/auth/login");
+  } catch (e) {
+    console.warn(e);
     response.redirect("/");
   }
 });
 
 router.post("/registr", async (request, response) => {
-  request.session.isAuthoenticated = true;
+  try {
+    const { name, email, password, password_comfirm } = request.body;
 
-  response.redirect("/");
+    if ((await User.exists({ email })) === false) {
+      const user = new User({ name, email, password });
+
+      await user.save();
+    }
+
+    return response.redirect("/auth/login");
+  } catch (e) {
+    console.warn(e);
+    response.redirect("/");
+  }
 });
 
 router.get("/logout", (request, response) => {
