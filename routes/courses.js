@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const auth = require("./../middleware/auth");
 const Course = require("./../models/course");
 
 const router = Router();
@@ -12,7 +13,7 @@ router.get("/", async (request, response) => {
   });
 });
 
-router.get("/:id/edit", async (request, response) => {
+router.get("/:id/edit", auth, async (request, response) => {
   if (request.query.allow !== "true") {
     return response.redirect("/");
   }
@@ -24,7 +25,7 @@ router.get("/:id/edit", async (request, response) => {
   });
 });
 
-router.get("/create", (request, response) => {
+router.get("/create", auth, (request, response) => {
   response.render("course/create", {
     title: "Добавить курс",
     isCreate: true,
@@ -48,7 +49,7 @@ router.get("/:id", async (request, response) => {
   });
 });
 
-router.post("/store", async (request, response) => {
+router.post("/store", auth, async (request, response) => {
   const course = new Course({
     title: request.body.title,
     description: request.body.description,
@@ -66,14 +67,14 @@ router.post("/store", async (request, response) => {
   response.redirect("/courses");
 });
 
-router.post("/update", async (request, response) => {
+router.post("/update", auth, async (request, response) => {
   const { id, ...data } = request.body;
   await Course.findByIdAndUpdate(id, data);
 
   response.redirect("/courses");
 });
 
-router.post("/remove", async (request, response) => {
+router.post("/remove", auth, async (request, response) => {
   try {
     await Course.deleteOne({ _id: request.body.id });
   } catch (e) {

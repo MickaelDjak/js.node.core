@@ -16,6 +16,7 @@
             <li><a href="/courses">Курсы</a></li>
             {{/if}}
 
+            {{#if isAuth}}
             {{#if isCreate}}
             <li class="active"><a href="/courses/create">Добавить курс</a></li>
             {{else}}
@@ -33,6 +34,7 @@
             {{else}}
             <li><a href="/order">Заказы</a></li>
             {{/if}}
+            {{/if}}
 
             {{#if isAbout}}
             <li class="active"><a href="/about">О нас</a></li>
@@ -40,13 +42,17 @@
             <li><a href="/about">О нас</a></li>
             {{/if}}
 
+            {{#if isAuth}}
+            <li><a href="/auth/logout">Выйти</a></li>
+
+            {{else}}
+
             {{#if isLogin}}
             <li class="active"><a href="/auth/login">Войти</a></li>
             {{else}}
             <li><a href="/auth/login">Войти</a></li>
             {{/if}}
-
-
+            {{/if}}
         </ul>
     </div>
 </nav>
