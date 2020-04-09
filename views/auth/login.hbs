@@ -10,6 +10,9 @@
             <h2>Аутентификация</h2>
 
             <form action='/auth/login' method="POST">
+
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
                 <div class="input-field">
                     <input name="email" id="email" type="email" class="validate" required />
                     <label for="email">Почта</label>
@@ -32,6 +35,8 @@
             <h2>Регистрация</h2>
 
             <form action='/auth/registr' method="POST">
+
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
                 <div class="input-field">
                     <input name="name" id="name_registrate" type="text" class="validate" required />

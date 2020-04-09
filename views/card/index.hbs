@@ -31,6 +31,7 @@
     <p>Цена <span class="price big">{{price}}</span></p>
 
     <form action="/order/" method="POST">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <button type="submit" class="btn">Сделать заказа</button>
     </form>
 

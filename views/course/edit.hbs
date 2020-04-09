@@ -2,6 +2,8 @@
 
 <form action='/courses/update' method="POST">
 
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
   <input type="hidden" name="id" value={{course.id}}>
 
   <div class="input-field">
@@ -32,6 +34,7 @@
 </form>
 
 <form action='/courses/remove' method="POST">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
   <input type="hidden" name="id" value={{course.id}}>
   <button type="submit" class="btn red">Удалить кур</button>
 </form>

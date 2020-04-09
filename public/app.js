@@ -19,7 +19,15 @@ if (cardHtml !== null) {
     if (event.target.classList.contains("card-on-delete")) {
       const id = event.target.dataset.id;
 
+      var token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+
       fetch(`card/delete/${id}`, {
+        credentials: "same-origin",
+        headers: {
+          "CSRF-Token": token,
+        },
         method: "delete",
       })
         .then((res) => res.json())

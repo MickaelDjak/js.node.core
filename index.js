@@ -2,6 +2,8 @@ const express = require("express");
 const handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const csrf = require("csurf");
 const expressSession = require("express-session");
 const MongoSession = require("connect-mongodb-session")(expressSession);
 const {
@@ -49,7 +51,11 @@ app.use(
   })
 );
 
+const csrfProtection = csrf({ cookie: true });
 // middleware
+app.use(cookieParser());
+// app.user(csrfProtection());
+
 const variables = require("./middleware/variables");
 const user = require("./middleware/user");
 const logger = require("./middleware/logger");
