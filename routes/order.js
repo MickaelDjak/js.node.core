@@ -1,9 +1,6 @@
 const { Router } = require("express");
 const auth = require("./../middleware/auth");
 const Order = require("./../models/order");
-const csrf = require("csurf");
-
-const csrfProtection = csrf({ cookie: true });
 
 const router = Router();
 
@@ -18,7 +15,7 @@ router.get("/", auth, async (request, response) => {
   });
 });
 
-router.post("/", auth, csrfProtection, async (request, response) => {
+router.post("/", auth, async (request, response) => {
   try {
     const user = request.user;
 

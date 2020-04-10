@@ -1,12 +1,9 @@
 const { Router } = require("express");
 const auth = require("./../middleware/auth");
-const csrf = require("csurf");
-
-const csrfProtection = csrf({ cookie: true });
 
 const router = Router();
 
-router.get("/", auth, csrfProtection, async (request, response) => {
+router.get("/", auth, async (request, response) => {
   const user = request.user;
 
   await user.fillData();
@@ -15,7 +12,6 @@ router.get("/", auth, csrfProtection, async (request, response) => {
   response.render("card/index", {
     title: "Корзина",
     isCard: true,
-    csrfToken: request.csrfToken(),
     ...card,
   });
 });
@@ -23,7 +19,7 @@ router.get("/", auth, csrfProtection, async (request, response) => {
 router.delete(
   "/delete/:id",
   auth,
-  csrfProtection,
+
   async (request, response) => {
     const user = request.user;
     await user.removeFromCard(request.params.id);
@@ -34,7 +30,7 @@ router.delete(
   }
 );
 
-router.post("/add", auth, csrfProtection, async (request, response) => {
+router.post("/add", auth, async (request, response) => {
   const user = request.user;
   await user.addToCard(request.body.id);
 

@@ -1,22 +1,18 @@
 const bcrype = require("bcryptjs");
 const { Router } = require("express");
-const csrf = require("csurf");
 
 const User = require("./../models/user");
 
-const csrfProtection = csrf({ cookie: true });
-
 const router = Router();
 
-router.get("/login", csrfProtection, (request, response) => {
+router.get("/login", (request, response) => {
   response.render("auth/login", {
     title: "Регистрация",
-    csrfToken: request.csrfToken(),
     isLogin: true,
   });
 });
 
-router.post("/login", csrfProtection, async (request, response) => {
+router.post("/login", async (request, response) => {
   try {
     const candidate = await User.findOne({
       email: request.body.email,
@@ -48,7 +44,7 @@ router.post("/login", csrfProtection, async (request, response) => {
   }
 });
 
-router.post("/registr", csrfProtection, async (request, response) => {
+router.post("/registr", async (request, response) => {
   try {
     const { name, email, password, password_comfirm } = request.body;
 
