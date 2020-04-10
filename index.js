@@ -1,20 +1,18 @@
-const express = require("express");
-const handlebars = require("handlebars");
-const exphbs = require("express-handlebars");
-const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
-const expressSession = require("express-session");
-const MongoSession = require("connect-mongodb-session")(expressSession);
-const {
-  allowInsecurePrototypeAccess,
-} = require("@handlebars/allow-prototype-access");
-
 const dbConnectionUrl =
   "mongodb://mdjak:fYibKrsXYRGBWVEQzl0w@localhost:27017/learner";
 
+const express = require("express");
 const app = express();
 
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+
 // html templater
+const exphbs = require("express-handlebars");
+const handlebars = require("handlebars");
+const {
+  allowInsecurePrototypeAccess,
+} = require("@handlebars/allow-prototype-access");
 const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs",
@@ -24,11 +22,9 @@ const hbs = exphbs.create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 
-// other stuff
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-
 // session
+const expressSession = require("express-session");
+const MongoSession = require("connect-mongodb-session")(expressSession);
 const sessionStore = new MongoSession({
   uri: dbConnectionUrl,
   collection: "sessions",
@@ -50,12 +46,23 @@ app.use(
   })
 );
 
+// cookie parser
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+// csrf protection
 const csrf = require("csurf");
 const csrfProtection = csrf({ cookie: true });
-// middleware
-app.use(cookieParser());
 app.use(csrfProtection);
 
+// flash
+var flash = require("connect-flash");
+
+// app.use(express.cookieParser("keyboard cat"));
+
+app.use(flash());
+
+// my middleware
 const variables = require("./middleware/variables");
 const user = require("./middleware/user");
 const logger = require("./middleware/logger");
@@ -83,6 +90,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
+    const mongoose = require("mongoose");
     await mongoose.connect(dbConnectionUrl, {
       useNewUrlParser: true,
       useFindAndModify: false,

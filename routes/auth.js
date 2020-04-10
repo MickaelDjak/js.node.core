@@ -9,6 +9,7 @@ router.get("/login", (request, response) => {
   response.render("auth/login", {
     title: "Регистрация",
     isLogin: true,
+    messages: request.flash("error"),
   });
 });
 
@@ -37,7 +38,8 @@ router.post("/login", async (request, response) => {
       }
     }
 
-    return response.redirect("/auth/login");
+    request.flash("error", `Ошибка при попытке войти в учетную запись`);
+    return response.redirect("/auth/login#login");
   } catch (e) {
     console.warn(e);
     response.redirect("/");
@@ -48,15 +50,25 @@ router.post("/registr", async (request, response) => {
   try {
     const { name, email, password, password_comfirm } = request.body;
 
-    const hashPassword = await bcrype.hash(password, 10);
+    if (password !== password_comfirm) {
+      request.flash("error", `Убедитесь что вы вводите пароль верно!`);
 
-    if ((await User.exists({ email })) === false) {
-      const user = new User({ name, email, password: hashPassword });
-
-      await user.save();
+      return response.redirect("/auth/login#registrate");
     }
 
-    return response.redirect("/auth/login");
+    const hashPassword = await bcrype.hash(password, 10);
+
+    if (await User.exists({ email })) {
+      request.flash("error", `Пользователь с таким email уже существует!`);
+
+      return response.redirect("/auth/login#registrate");
+    }
+
+    const user = new User({ name, email, password: hashPassword });
+
+    await user.save();
+
+    return response.redirect("/auth/login#login");
   } catch (e) {
     console.warn(e);
     response.redirect("/");
@@ -65,7 +77,7 @@ router.post("/registr", async (request, response) => {
 
 router.get("/logout", (request, response) => {
   request.session.destroy(() => {
-    response.redirect("/auth/login");
+    response.redirect("/auth/login#login");
   });
 });
 
