@@ -130,31 +130,44 @@ router.post("/reset", async (request, response) => {
   }
 });
 
-router.get("/password_recovery/:token", async (request, response) => {
-  response.render("auth/recovery", {
-    title: "Востановление пароля",
-    recoveryToken: request.params.token,
-    isLogin: true,
-    messages: request.flash("error"),
-  });
+router.get("/password_recovery/:token?", async (request, response) => {
+  try {
+    if (!request.params.token) {
+      return response.redirect("/auth/login");
+    }
+
+    const candidate = await User.findOne({
+      resetToken: request.params.token,
+      resetTokenExpiration: { $gt: Date.now() },
+    });
+
+    if (candidate) {
+      response.render("auth/recovery", {
+        title: "Востановление пароля",
+        recoveryToken: request.params.token,
+        userId: candidate._id.toString(),
+        isLogin: true,
+        messages: request.flash("error"),
+      });
+    } else {
+      response.redirect("/auth/login");
+    }
+  } catch (e) {
+    console.error(e);
+    request.flash("error", "Произошла ошибка, повторите попытку позже!");
+    response.redirect("/auth/login");
+  }
 });
 
 router.post("/password_recovery", async (request, response) => {
   try {
-    const candidate = await User.findOne({
+    const user = await User.findOne({
+      _id: request.body.user_id,
       resetToken: request.body.recovery_token,
+      resetTokenExpiration: { $gt: Date.now() },
     });
 
-    if (candidate.resetTokenExpiration < Date.now()) {
-      request.flash(
-        "error",
-        `Время на востановление прароля истекло! Попробуйте еще раз.`
-      );
-
-      return response.redirect(`/auth/login`);
-    }
-
-    if (candidate) {
+    if (user) {
       if (request.body.password !== request.body.password_comfirm) {
         request.flash("error", `Убедитесь что вы вводите пароль верно!`);
 
@@ -163,19 +176,16 @@ router.post("/password_recovery", async (request, response) => {
         );
       }
 
-      const hashedPassword = await bcrype.hash(request.body.password, 10);
-      candidate.resetToken = undefined;
-      candidate.resetTokenExpiration = undefined;
-      candidate.password = hashedPassword;
-      await candidate.save();
+      user.resetToken = undefined;
+      user.resetTokenExpiration = undefined;
+      user.password = await bcrype.hash(request.body.password, 10);
+      await user.save();
 
       response.redirect("/auth/login");
-
-      return;
+    } else {
+      request.flash("error", "Ошибка при востановлении пароля!");
+      response.redirect("/auth/login");
     }
-
-    request.flash("error", "Ошибка при востановлении пароля !");
-    response.redirect("/auth/login");
   } catch (e) {
     console.error(e);
     request.flash("error", "Произошла ошибка, повторите попытку позже!");
