@@ -108,4 +108,8 @@ userSchema.methods.toClient = function () {
   );
 };
 
+userSchema.methods.isIdEqual = function (otherId) {
+  return this._id.toString() == otherId;
+};
+
 module.exports = model("User", userSchema);

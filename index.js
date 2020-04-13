@@ -16,6 +16,7 @@ const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs",
   handlebars: allowInsecurePrototypeAccess(handlebars),
+  helpers: require("./utils/hbs-helper"),
 });
 
 app.engine("hbs", hbs.engine);
@@ -60,28 +61,17 @@ var flash = require("connect-flash");
 app.use(flash());
 
 // my middleware
-const variables = require("./middleware/variables");
-const user = require("./middleware/user");
-const logger = require("./middleware/logger");
-
-app.use(variables);
-app.use(user);
-// app.use(logger);
+app.use(require("./middleware/variables"));
+app.use(require("./middleware/user"));
+// app.use(require("./middleware/logger"));
 
 // router
-const homeRoute = require("./routes/home");
-const aboutRoute = require("./routes/about");
-const coursesRoute = require("./routes/courses");
-const cardRoute = require("./routes/card");
-const orderRoute = require("./routes/order");
-const authRoute = require("./routes/auth");
-
-app.use("/", homeRoute);
-app.use("/about", aboutRoute);
-app.use("/courses", coursesRoute);
-app.use("/card", cardRoute);
-app.use("/order", orderRoute);
-app.use("/auth", authRoute);
+app.use("/", require("./routes/home"));
+app.use("/about", require("./routes/about"));
+app.use("/courses", require("./routes/courses"));
+app.use("/card", require("./routes/card"));
+app.use("/order", require("./routes/order"));
+app.use("/auth", require("./routes/auth"));
 
 const PORT = process.env.PORT || 3000;
 
