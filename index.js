@@ -1,5 +1,4 @@
-const dbConnectionUrl =
-  "mongodb://mdjak:fYibKrsXYRGBWVEQzl0w@localhost:27017/learner";
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -26,7 +25,7 @@ app.set("view engine", "hbs");
 const expressSession = require("express-session");
 const MongoSession = require("connect-mongodb-session")(expressSession);
 const sessionStore = new MongoSession({
-  uri: dbConnectionUrl,
+  uri: process.env.MONGO_CONNECTION,
   collection: "sessions",
 });
 
@@ -36,11 +35,11 @@ sessionStore.on("error", function (error) {
 
 app.use(
   expressSession({
-    secret: "GVq4OWSsQ8kuXTy04Ki0",
+    secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+      maxAge: process.env.SESSION_TIME_LIFE,
     },
     store: sessionStore,
   })
@@ -57,9 +56,6 @@ app.use(csrfProtection);
 
 // flash
 var flash = require("connect-flash");
-
-// app.use(express.cookieParser("keyboard cat"));
-
 app.use(flash());
 
 // my middleware
@@ -91,7 +87,7 @@ const PORT = process.env.PORT || 3000;
 async function start() {
   try {
     const mongoose = require("mongoose");
-    await mongoose.connect(dbConnectionUrl, {
+    await mongoose.connect(process.env.MONGO_CONNECTION, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
