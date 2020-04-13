@@ -30,7 +30,8 @@ const sessionStore = new MongoSession({
 });
 
 sessionStore.on("error", function (error) {
-  console.log("SESSION", error);
+  console.error("SESSION error !!!");
+  console.error("SESSION", error);
 });
 
 app.use(
@@ -39,7 +40,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: process.env.SESSION_TIME_LIFE,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     },
     store: sessionStore,
   })

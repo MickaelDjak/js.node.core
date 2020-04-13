@@ -1,5 +1,7 @@
-const bcrype = require("bcryptjs");
 const { Router } = require("express");
+const bcrype = require("bcryptjs");
+const mailer = require("./../emails/mailer");
+const registrationMessege = require("./../emails/registration");
 
 const User = require("./../models/user");
 
@@ -68,9 +70,14 @@ router.post("/registr", async (request, response) => {
 
     await user.save();
 
-    return response.redirect("/auth/login#login");
+    response.redirect("/auth/login#login");
+
+    await mailer(registrationMessege(email));
   } catch (e) {
-    console.warn(e);
+    console.error(e);
+    if (e.response) {
+      console.error(error.response.body);
+    }
     response.redirect("/");
   }
 });
