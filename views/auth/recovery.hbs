@@ -1,0 +1,30 @@
+<div class="reset_password">
+    <div class="row">
+        <div class="col s6 offset-s3 ">
+            <h2>Введите новый пароля</h2>
+
+            <form action='/auth/password_recovery' method="POST">
+
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+                <input type="hidden" name="recovery_token" value="{{recoveryToken}}">
+
+                <div class="input-field">
+                    <input name="password" id="password" type="password" class="validate" required />
+                    <label for="password">Пароль</label>
+                    <span class="helper-text" data-error="Введите пароль"></span>
+                </div>
+
+                <div class="input-field">
+                    <input name="password_comfirm" id="password_comfirm" type="password" class="validate" required />
+                    <label for="password_comfirm">Повторно пароль</label>
+                    <span class="helper-text" data-error="Введите пароль еще раз"></span>
+                </div>
+
+                <button class="btn btn-primary">Востановить</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>

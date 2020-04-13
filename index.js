@@ -66,7 +66,7 @@ const logger = require("./middleware/logger");
 
 app.use(variables);
 app.use(user);
-app.use(logger);
+// app.use(logger);
 
 // router
 const homeRoute = require("./routes/home");

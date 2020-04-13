@@ -1,0 +1,30 @@
+<div class="reset_password">
+    <div class="row">
+        {{#if messages.length }}
+        <div class="col s6 offset-s3 ">
+            {{#each messages as |message|}}
+            <p class="alert">{{message}}</p>
+            {{/each}}
+        </div>
+        {{/if}}
+
+        <div class="col s6 offset-s3 ">
+            <h2>Востановление пароля</h2>
+
+            <form action='/auth/reset' method="POST">
+
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+                <div class="input-field">
+                    <input name="email" id="email" type="email" class="validate" required />
+                    <label for="email">Почта</label>
+                    <span class="helper-text" data-error="Введите электронную почту"></span>
+                </div>
+
+                <button class="btn btn-primary">Востановить</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
