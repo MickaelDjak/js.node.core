@@ -2,6 +2,8 @@ const { Router } = require("express");
 const bcrype = require("bcryptjs");
 const crypto = require("crypto");
 const mailer = require("./../emails/mailer");
+const { body, validationResult } = require("express-validator");
+const validators = require("./../validators/index");
 const registrationMessege = require("./../emails/registration");
 const recoveryPasswordMessege = require("./../emails/recoveryPassword");
 
@@ -17,8 +19,14 @@ router.get("/login", (request, response) => {
   });
 });
 
-router.post("/login", async (request, response) => {
+router.post("/login", validators.loginValidator, async (request, response) => {
   try {
+    if (validators.handler.isInvalid(request)) {
+      validators.handler.fill(request);
+
+      return response.status(422).redirect("/auth/login#registrate");
+    }
+
     const candidate = await User.findOne({
       email: request.body.email,
     });
@@ -50,39 +58,49 @@ router.post("/login", async (request, response) => {
   }
 });
 
-router.post("/registr", async (request, response) => {
-  try {
-    const { name, email, password, password_comfirm } = request.body;
+router.post(
+  "/registr",
+  validators.registrateValidator,
+  async (request, response) => {
+    try {
+      if (validators.handler.isInvalid(request)) {
+        validators.handler.fill(request);
 
-    if (password !== password_comfirm) {
-      request.flash("error", `Убедитесь что вы вводите пароль верно!`);
+        return response.status(422).redirect("/auth/login#registrate");
+      }
 
-      return response.redirect("/auth/login#registrate");
+      const { name, email, password, password_comfirm } = request.body;
+
+      if (password !== password_comfirm) {
+        request.flash("error", `Убедитесь что вы вводите пароль верно!`);
+
+        return response.redirect("/auth/login#registrate");
+      }
+
+      const hashPassword = await bcrype.hash(password, 10);
+
+      if (await User.exists({ email })) {
+        request.flash("error", `Пользователь с таким email уже существует!`);
+
+        return response.redirect("/auth/login#registrate");
+      }
+
+      const user = new User({ name, email, password: hashPassword });
+
+      await user.save();
+
+      response.redirect("/auth/login#login");
+
+      await mailer(registrationMessege(email));
+    } catch (e) {
+      console.error(e);
+      if (e.response) {
+        console.error(error.response.body);
+      }
+      response.redirect("/");
     }
-
-    const hashPassword = await bcrype.hash(password, 10);
-
-    if (await User.exists({ email })) {
-      request.flash("error", `Пользователь с таким email уже существует!`);
-
-      return response.redirect("/auth/login#registrate");
-    }
-
-    const user = new User({ name, email, password: hashPassword });
-
-    await user.save();
-
-    response.redirect("/auth/login#login");
-
-    await mailer(registrationMessege(email));
-  } catch (e) {
-    console.error(e);
-    if (e.response) {
-      console.error(error.response.body);
-    }
-    response.redirect("/");
   }
-});
+);
 
 router.get("/logout", (request, response) => {
   request.session.destroy(() => {

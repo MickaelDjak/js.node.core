@@ -49,10 +49,6 @@ router.get("/create", auth, (request, response) => {
 
 router.get("/:id", async (request, response) => {
   try {
-    if (request.query.allow !== "true") {
-      return response.redirect("/");
-    }
-
     const course = await Course.findById(request.params.id).populate(
       "userId",
       "email name"
@@ -105,10 +101,10 @@ router.post("/update", auth, async (request, response) => {
 
 router.post("/remove", auth, async (request, response) => {
   try {
-    const course = await Course.findById(id);
-    if (request.user.isIdEqual(course.userId)) {
-      await Course.deleteOne({ _id: request.body.id });
-    }
+    const course = await Course.deleteOne({
+      _id: request.body.id,
+      userId: request.user._id,
+    });
 
     response.redirect("/courses");
   } catch (e) {
