@@ -15,7 +15,6 @@ router.get("/login", (request, response) => {
   response.render("auth/login", {
     title: "Регистрация",
     isLogin: true,
-    messages: request.flash("error"),
   });
 });
 
@@ -69,23 +68,13 @@ router.post(
         return response.status(422).redirect("/auth/login#registrate");
       }
 
-      const { name, email, password, password_comfirm } = request.body;
+      const { name, email, password } = request.body;
 
-      if (password !== password_comfirm) {
-        request.flash("error", `Убедитесь что вы вводите пароль верно!`);
-
-        return response.redirect("/auth/login#registrate");
-      }
-
-      const hashPassword = await bcrype.hash(password, 10);
-
-      if (await User.exists({ email })) {
-        request.flash("error", `Пользователь с таким email уже существует!`);
-
-        return response.redirect("/auth/login#registrate");
-      }
-
-      const user = new User({ name, email, password: hashPassword });
+      const user = new User({
+        name,
+        email,
+        password: await bcrype.hash(password, 10),
+      });
 
       await user.save();
 
@@ -165,7 +154,6 @@ router.get("/password_recovery/:token?", async (request, response) => {
         recoveryToken: request.params.token,
         userId: candidate._id.toString(),
         isLogin: true,
-        messages: request.flash("error"),
       });
     } else {
       response.redirect("/auth/login");

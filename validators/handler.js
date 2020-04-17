@@ -6,8 +6,14 @@ module.exports = {
   },
 
   fill(request) {
-    const errors = validationResult(request);
+    validationResult(request)
+      .array()
+      .forEach((el) => request.flash("error", el.msg));
+  },
 
-    errors.array().forEach((el) => request.flash("error", el.msg));
+  getMessages(request) {
+    return validationResult(request)
+      .array()
+      .map((el) => el.msg);
   },
 };

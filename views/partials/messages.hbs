@@ -1,6 +1,6 @@
-{{#if messages.length }}
+{{#if errorMessages.length }}
 <div class="col s6 offset-s3 ">
-    {{#each messages as |message|}}
+    {{#each errorMessages as |message|}}
     <p class="alert">{{message}}</p>
     {{/each}}
 </div>

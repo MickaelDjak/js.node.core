@@ -2,12 +2,12 @@ const { body } = require("express-validator");
 
 module.exports = [
   body("email")
+    .trim()
     .normalizeEmail()
     .isEmail()
     .withMessage("Поле `E-mail` введен с ошибкой."),
   body("password")
     .trim()
-    .escape()
     .not()
     .isEmpty()
     .withMessage("Поле `Пароль` не может быть пустым.")
