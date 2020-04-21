@@ -1,9 +1,15 @@
 require("dotenv").config();
-const path = require("path");
 
 const express = require("express");
 const app = express();
 
+var compression = require("compression");
+app.use(compression());
+
+const helmet = require("helmet");
+app.use(helmet());
+
+const path = require("path");
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.urlencoded({ extended: true }));
