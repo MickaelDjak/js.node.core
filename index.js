@@ -1,9 +1,11 @@
 require("dotenv").config();
+const path = require("path");
 
 const express = require("express");
 const app = express();
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.urlencoded({ extended: true }));
 
 // html templater
@@ -47,6 +49,9 @@ app.use(
   })
 );
 
+const fileUploader = require("./middleware/file");
+app.use(fileUploader.single("avatar"));
+
 // cookie parser
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
@@ -60,7 +65,7 @@ app.use(csrfProtection);
 var flash = require("connect-flash");
 app.use(flash());
 
-// my middleware
+// my before middleware
 app.use(require("./middleware/variables"));
 app.use(require("./middleware/user"));
 // app.use(require("./middleware/logger"));
@@ -72,6 +77,10 @@ app.use("/courses", require("./routes/courses"));
 app.use("/card", require("./routes/card"));
 app.use("/order", require("./routes/order"));
 app.use("/auth", require("./routes/auth"));
+app.use("/profile", require("./routes/profile"));
+
+// my after middleware
+app.use(require("./middleware/error"));
 
 const PORT = process.env.PORT || 3000;
 

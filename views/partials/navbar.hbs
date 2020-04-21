@@ -36,6 +36,12 @@
             {{/if}}
             {{/if}}
 
+            {{#if isProfile}}
+            <li class="active"><a href="/profile">Профиль</a></li>
+            {{else}}
+            <li><a href="/profile">Профиль</a></li>
+            {{/if}}
+
             {{#if isAbout}}
             <li class="active"><a href="/about">О нас</a></li>
             {{else}}
