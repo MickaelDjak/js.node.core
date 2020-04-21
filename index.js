@@ -99,6 +99,13 @@ async function start() {
       useUnifiedTopology: true,
     });
 
+    const fs = require("fs");
+    var dir = "./images";
+
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
