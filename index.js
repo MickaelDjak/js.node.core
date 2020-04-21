@@ -78,7 +78,6 @@ app.use(require("./middleware/user"));
 
 // router
 app.use("/", require("./routes/home"));
-app.use("/about", require("./routes/about"));
 app.use("/courses", require("./routes/courses"));
 app.use("/card", require("./routes/card"));
 app.use("/order", require("./routes/order"));
